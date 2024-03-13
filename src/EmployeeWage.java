@@ -5,10 +5,8 @@ public class EmployeeWage {
     static int MaxWorkingDays = 20;
     static int MaxWorkinghrs = 100;
 
-    public static void main(String[] args)
+    public void calculateWage()
     {
-        System.out.println("Welcome to Employee Wage Computation Program....");
-
         int empHr = 0, empWage = 0, totalEmpWage =0;
         int WorkHrs = 0, WorkDays = 0;
 
@@ -41,5 +39,12 @@ public class EmployeeWage {
         System.out.println("Total working hours: "+WorkHrs);
         totalEmpWage = WorkHrs * ratePerHr;
         System.out.println("Total Employee Wage:" + totalEmpWage);
+    }
+    public static void main(String[] args)
+    {
+        System.out.println("Welcome to Employee Wage Computation Program....");
+        EmployeeWage wage = new EmployeeWage();
+        wage.calculateWage();
+
     }
 }
