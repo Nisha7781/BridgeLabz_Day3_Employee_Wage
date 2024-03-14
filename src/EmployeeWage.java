@@ -1,76 +1,72 @@
-public class EmployeeWage {
-    public static int fullTime = 1;
-    public static int partTime = 2;
+import java.util.Random;
 
+interface IEmployeeWage {
+    void calculateWage();
+}
+
+class EmployeeWage implements IEmployeeWage {
     private final String company;
     private final int ratePerHr;
     private final int maxWorkingDays;
     private final int maxWorkinghrs;
     private int totalEmpWage;
 
-    public EmployeeWage(String company, int ratePerHr,int maxWorkingDays, int maxWorkinghrs)
-    {
+    public EmployeeWage(String company, int ratePerHr, int maxWorkingDays, int maxWorkinghrs) {
         this.company = company;
         this.ratePerHr = ratePerHr;
         this.maxWorkingDays = maxWorkingDays;
         this.maxWorkinghrs = maxWorkinghrs;
     }
 
+    @Override
+    public void calculateWage() {
+        int empHr = 0, totalWorkHrs = 0, totalWorkDays = 0;
 
-    public void calculateWage()
-    {
-        int empHr = 0, empWage = 0;
-        int totalEmpWage =0;
-        int WorkHrs = 0,  WorkDays = 0;
+        while (totalWorkDays < maxWorkingDays && totalWorkHrs < maxWorkinghrs) {
+            totalWorkDays++;
+            int empPresent = new Random().nextInt(3);
 
-        while(WorkDays < maxWorkingDays && WorkHrs < maxWorkinghrs )
-        {
-            WorkDays++;
-            int EmpPresent = (int) Math.floor(Math.random( )*10) % 3;
-
-            if(EmpPresent == fullTime)
-            {
-                empHr = 8;
-            }
-            else if(EmpPresent == partTime)
-            {
-                empHr = 5;
-            }
-            else
-            {
-                empHr = 0;
+            switch (empPresent) {
+                case 1:
+                    empHr = 8; // Full-time
+                    break;
+                case 2:
+                    empHr = 4; // Part-time
+                    break;
+                default:
+                    empHr = 0; // Absent
             }
 
-            WorkHrs = WorkHrs + empHr;
-            empWage = empHr * ratePerHr;
-
+            totalWorkHrs += empHr;
         }
-        totalEmpWage = WorkHrs * ratePerHr;
+        totalEmpWage = totalWorkHrs * ratePerHr;
     }
 
-    public String toString()
-    {
-        System.out.println("Details of " + company + " employee");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("Wage per hour:" + ratePerHr);
-        System.out.println("Maximum working days:" + maxWorkingDays);
-        System.out.println("Maximum working hours:" + maxWorkinghrs);
-        return "Total wage for a month of " + company + " employee is " + totalEmpWage + "\n";
-
+    @Override
+    public String toString() {
+        return "Details of " + company + " employee\n" +
+                "-----------------------------------------------------\n" +
+                "Wage per hour: " + ratePerHr + "\n" +
+                "Maximum working days: " + maxWorkingDays + "\n" +
+                "Maximum working hours: " + maxWorkinghrs + "\n" +
+                "Total wage for a month of " + company + " employee is " + totalEmpWage + "\n";
     }
+
     public static void main(String[] args)
     {
         System.out.println("Welcome to Employee Wage Computation Program....");
 
-        EmployeeWage google = new EmployeeWage("Google", 20, 20, 100);
-        google.calculateWage();
-        System.out.println(google);
+        IEmployeeWage[] companies = new IEmployeeWage[3];
+        companies[0] = new EmployeeWage("Google", 20, 20, 100);
+        companies[1] = new EmployeeWage("Microsoft", 18, 20, 120);
+        companies[2] = new EmployeeWage("Amazon", 24, 22, 130);
 
-        EmployeeWage microsoft = new EmployeeWage("Microsoft", 18, 20, 120);
-        microsoft.calculateWage();
-        System.out.println(microsoft);
-
+        for(int i = 0; i < companies.length; i++)
+        {
+            IEmployeeWage company = companies[i];
+            company.calculateWage();
+            System.out.println(company);
+        }
 
     }
-
 }
