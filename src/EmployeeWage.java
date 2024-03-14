@@ -26,7 +26,7 @@ class EmployeeWage implements IEmployeeWage {
 
         while (totalWorkDays < maxWorkingDays && totalWorkHrs < maxWorkinghrs) {
             totalWorkDays++;
-            int empPresent = new Random().nextInt(3);
+            int empPresent =(int) Math.floor(Math.random() * 10) % 3;
 
             switch (empPresent) {
                 case 1:
